@@ -3,7 +3,7 @@ module github.com/TicketsBot/misconduct-detector
 go 1.22
 
 require (
-	github.com/TicketsBot/common v0.0.0-20241104184641-e39c64bdcf3e
+	github.com/TicketsBot/common v0.0.0-20241109130348-0495e66b7674
 	github.com/caarlos0/env/v11 v11.2.2
 	github.com/getsentry/sentry-go v0.21.0
 	github.com/prometheus/client_golang v1.20.5
@@ -39,5 +39,3 @@ require (
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-replace github.com/TicketsBot/common => ../common

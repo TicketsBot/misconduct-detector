@@ -11,10 +11,12 @@ import (
 	"github.com/TicketsBot/misconduct-detector/internal/queue"
 	"github.com/getsentry/sentry-go"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rxdn/gdl/cache"
 	"github.com/rxdn/gdl/objects/guild"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"net/http"
 	"os"
 	"os/signal"
 	"sync"
@@ -55,6 +57,17 @@ func main() {
 
 	if err != nil {
 		panic(fmt.Errorf("failed to initialise zap logger: %w", err))
+	}
+
+	if config.PrometheusServerAddr != nil {
+		logger.Info("Starting Prometheus server", zap.String("addr", *config.PrometheusServerAddr))
+
+		http.Handle("/metrics", promhttp.Handler())
+		go func() {
+			if err := http.ListenAndServe(*config.PrometheusServerAddr, nil); err != nil {
+				panic(err)
+			}
+		}()
 	}
 
 	// Build app context

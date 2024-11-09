@@ -7,9 +7,11 @@ import (
 )
 
 type Config struct {
-	SentryDsn       *string       `env:"SENTRY_DSN"`
-	JsonLogs        bool          `env:"JSON_LOGS"`
-	LogLevel        zapcore.Level `env:"LOG_LEVEL" envDefault:"info"`
+	SentryDsn            *string       `env:"SENTRY_DSN"`
+	JsonLogs             bool          `env:"JSON_LOGS"`
+	LogLevel             zapcore.Level `env:"LOG_LEVEL" envDefault:"info"`
+	PrometheusServerAddr *string       `env:"PROMETHEUS_SERVER_ADDR"`
+
 	TaskTimeout     time.Duration `env:"TASK_TIMEOUT" envDefault:"10s"`
 	ConcurrentTasks int           `env:"CONCURRENT_TASKS" envDefault:"3"`
 
