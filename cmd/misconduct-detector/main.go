@@ -102,6 +102,8 @@ func main() {
 		return
 	}
 
+	rpcClient.StartConsumer()
+
 	logger.Info("RPC client started")
 
 	wg := &sync.WaitGroup{}
