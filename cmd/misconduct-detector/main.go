@@ -91,6 +91,7 @@ func main() {
 		logger.With(zap.String("service", "rpc-client")),
 		rpc.Config{
 			Brokers:             config.Kafka.Brokers,
+			ConsumerGroup:       "misconduct-detector",
 			ConsumerConcurrency: 1,
 		},
 		map[string]rpc.Listener{
