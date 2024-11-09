@@ -55,7 +55,7 @@ func (c *Consumer) HandleMessage(ctx context.Context, message []byte) {
 	}
 
 	var guild events.GuildCreate
-	if err := json.Unmarshal(wrapped.Event, &guild); err != nil {
+	if err := json.Unmarshal(payload.Data, &guild); err != nil {
 		c.logger.Error("Failed to unmarshal guild", zap.Error(err))
 		return
 	}
