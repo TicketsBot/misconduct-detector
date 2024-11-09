@@ -14,6 +14,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rxdn/gdl/cache"
 	"github.com/rxdn/gdl/objects/guild"
+	"github.com/rxdn/gdl/rest/request"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"net/http"
@@ -72,6 +73,14 @@ func main() {
 
 	// Build app context
 	appContext := must(buildAppContext(config, logger))
+
+	if config.Discord.ProxyUrl != nil {
+		logger.Info("Using proxy", zap.String("url", *config.Discord.ProxyUrl))
+		request.RegisterPreRequestHook(func(_ string, req *http.Request) {
+			req.URL.Scheme = "http"
+			req.URL.Host = *config.Discord.ProxyUrl
+		})
+	}
 
 	// Connect to Kafka
 	guildCh := make(chan guild.Guild, 10)
